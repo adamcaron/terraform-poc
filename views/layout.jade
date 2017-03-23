@@ -3,5 +3,24 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js')
+    script.
+      let app = angular.module('terraformTest', [])
+      app.controller('terraformTestController', ($scope, $http) => {
+        $scope.terraformConfig = undefined
+        $scope.createAwsInstance = () => $http
+        .post('/instances/create', {
+          terraformConfig: $scope.terraformConfig
+        })
+        .then(data => console.log(data))
+      })
+  body(style='background-color: #fefefe')
     block content
+    div(ng-app='terraformTest', ng-controller='terraformTestController')
+      textarea(ng-model='terraformConfig', style='width:60%; min-height:500px')
+      br
+      button(ng-click='createAwsInstance()', style='') Create AWS Instance
+      br
+      br
+      span(style='width:30%; min-height:500px') Name:
+        p {{ terraformConfig }}
