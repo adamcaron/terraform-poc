@@ -9,10 +9,10 @@ html
       app.controller('terraformTestController', ($scope, $http) => {
         $scope.terraformConfig = undefined
         $scope.createAwsInstance = () => $http
-        .post('/instances/create', {
-          terraformConfig: $scope.terraformConfig
-        })
-        .then(data => console.log(data))
+          .post('/instances/create', {
+            terraformConfig: $scope.terraformConfig
+          })
+          .then(data => console.log(data))
       })
   body(style='background-color: #fefefe')
     block content

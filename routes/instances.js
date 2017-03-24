@@ -5,6 +5,9 @@ const fs = require('fs')
 
 /* POST create instance. */
 router.post('/create', (req, res, next) => {
+  if (!fs.existsSync('./data')) { // ensure '/data' exists
+    fs.mkdirSync('./data')
+  }
   if (!fs.existsSync('./data/deployments')) { // ensure '/deployments' exists
     fs.mkdirSync('./data/deployments')
   }
