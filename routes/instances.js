@@ -15,6 +15,10 @@ router.post('/create', (req, res, next) => {
   const id = Math.round(Math.random() * 1000000000000000000)
   const dir = `./data/deployments/${id}`
   fs.mkdirSync(dir) // namespece deployment files
+  if (req.body.terraformConfig.match(/provider "google"/)) { // load account credentials for GCP
+    const creds = fs.readFileSync('./data/gcp-creds.json')
+    fs.writeFileSync(`${dir}/account.json`, creds)
+  }
   fs.writeFile(`${dir}/instance.tf`, req.body.terraformConfig, (err) => { // create tf file
     if (err) res.status(500).json(err)
     nodeCmd.get(`cd ${dir} && terraform plan`, (data, err) => { // run terraform plan

@@ -57,6 +57,43 @@ html
       }`
               }
             ]
+          },
+          {
+            name: 'Google Cloud Platform',
+            configs: [
+              {
+                name: 'Single Instance 4GB Debian 8',
+                template: `// Configure the Google Cloud provider
+      provider "google" {
+        credentials = "\${file(\"account.json\")}"
+        project     = "terraformtest-162819"
+        region      = "us-central1"
+      }
+
+      // Create a new instance
+      resource "google_compute_instance" "default" {
+        name         = "test"
+        machine_type = "n1-standard-1"
+        zone         = "us-central1-a"
+
+        disk {
+          image = "debian-cloud/debian-8"
+        }
+
+        // Local SSD disk
+        disk {
+          type    = "local-ssd"
+          scratch = true
+        }
+
+        network_interface {
+          network = "default"
+        }
+
+        metadata_startup_script = "echo hi > /test.txt"
+      }`
+              }
+            ]
           }
         ]
       })
