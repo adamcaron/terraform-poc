@@ -3,24 +3,83 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css")
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js')
+    script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js")
     script.
       const app = angular.module('terraformTest', [])
       app.controller('terraformTestController', ($scope, $http) => {
         $scope.terraformConfig = undefined
+        $scope.applyTemplate = (template) => {
+          $scope.terraformConfig = template
+        }
         $scope.createAwsInstance = () => $http
           .post('/instances/create', {
             terraformConfig: $scope.terraformConfig
           })
           .then(data => console.log(data))
+        $scope.providerConfigs = [
+          {
+            name: 'AWS',
+            configs: [
+              {
+                name: 'Single Instance t2Micro Ubuntu 14.04',
+                template: `provider "aws" {
+        access_key = ""
+        secret_key = ""
+        region     = "us-east-1"
+      }
+
+      resource "aws_instance" "example" {
+        ami           = "ami-0d729a60"
+        instance_type = "t2.micro"
+      }`
+              }
+            ]
+          },
+          {
+            name: 'Digital Ocean',
+            configs: [
+              {
+                name: 'Single Instance 512mb Ubuntu 14.04',
+                template: `# Configure the DigitalOcean Provider
+      provider "digitalocean" {
+        token = ""
+      }
+
+      # Create a web server
+      resource "digitalocean_droplet" "web" {
+        image  = "ubuntu-14-04-x64"
+        name   = "web-1"
+        region = "nyc2"
+        size   = "512mb"
+      }`
+              }
+            ]
+          }
+        ]
       })
-  body(style='background-color: #fefefe')
-    block content
-    div(ng-app='terraformTest', ng-controller='terraformTestController')
-      textarea(ng-model='terraformConfig', style='width:60%; min-height:500px')
-      br
-      button(ng-click='createAwsInstance()', style='') Create AWS Instance
-      br
-      br
-      span(style='width:30%; min-height:500px') Name:
-        p {{ terraformConfig }}
+  body
+    .container(ng-app='terraformTest', ng-controller='terraformTestController')
+      header.row
+        .col.s12
+          block content
+      main.row
+        .col.s7
+          textarea(ng-model='terraformConfig')
+        #sidebar.col.s5
+          .col.s12
+            em Load a configuration,
+            br
+            em Create an instance,
+            br
+            em Watch the infrastructure spin up.
+          .col.s12.providers
+            h4 Configurations
+            div(ng-repeat='providerConfig in providerConfigs')
+              .provider {{ providerConfig.name }}
+              div(ng-repeat='config in providerConfig.configs')
+                p.template(ng-click='applyTemplate(config.template)') {{ config.name }}
+          .col.s12.create-an-instance
+            button.btn(ng-click='createAwsInstance()') Create An Instance

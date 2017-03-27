@@ -6,3 +6,39 @@ body {
 a {
   color: #00B7FF;
 }
+
+main textarea {
+  margin-right: 10px;
+  min-height: 500px;
+  font-family: "Lucida Console", monospace;
+}
+
+#sidebar .col {
+  padding-left: 0;
+}
+
+.col.s12.providers {
+  margin-top: 1.14rem;
+  margin-bottom: 1.14rem;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.provider {
+  margin-bottom: 5px;
+}
+
+.template {
+  color: blue;
+  margin-top: 0;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.template:hover {
+  text-decoration: underline;
+}
+
+.create-an-instance {
+  padding-top: 1.14rem;
+}
