@@ -19,6 +19,7 @@ html
             terraformConfig: $scope.terraformConfig
           })
           .then(data => console.log(data))
+          .catch(err => console.log(err))
         $scope.providerConfigs = [
           {
             name: 'AWS',
@@ -65,7 +66,7 @@ html
                 name: 'Single Instance 4GB Debian 8',
                 template: `// Configure the Google Cloud provider
       provider "google" {
-        credentials = "\${file(\"account.json\")}"
+        credentials = "\${file(\"../../creds.json\")}"
         project     = "terraformtest-162819"
         region      = "us-central1"
       }
