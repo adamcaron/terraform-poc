@@ -27,3 +27,10 @@ See provier-specific documentation here: [https://www.terraform.io/docs/provider
  - `npm start`
 
 Navigate to [localhost:3000/](http://localhost:3000/).
+
+## Cloud Specific Instructions
+
+### GCP
+
+For Google Cloud Platform, follow [these instructions](https://www.terraform.io/docs/providers/google/index.html) to copy credentials `.json` file into `/data/creds.json`.  Load the config on the front end, specify a project name, and a unique instance name.
+
