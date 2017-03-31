@@ -4,7 +4,7 @@ ENV TERRAFORM_VERSION=0.9.2
 ENV TERRAFORM_SHA256SUM=a916228ea4c19c91c9a5dee2905885f517eb7c31ba4dbf5d79f9f36606973313
 
 # Install Terraform
-RUN apk add --update curl ca-certificates && \
+RUN apk add --update curl ca-certificates vim && \
     curl https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip > terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     echo "${TERRAFORM_SHA256SUM}  terraform_${TERRAFORM_VERSION}_linux_amd64.zip" > terraform_${TERRAFORM_VERSION}_SHA256SUMS && \
     sha256sum -cs terraform_${TERRAFORM_VERSION}_SHA256SUMS && \
