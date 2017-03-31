@@ -22,6 +22,15 @@ See provier-specific documentation here: [https://www.terraform.io/docs/provider
 
 ## Up and Running
 
+### Docker
+
+ - Ensure Docker is running
+ - `docker run -p 3000:3000 adamcaron/terraform-test`
+
+Navigate to [localhost:3000/](http://localhost:3000/).
+
+### Localhost
+
  - `git clone git@github.com:adamcaron/terraform-test.git`
  - `npm i`
  - `npm start`
@@ -32,5 +41,5 @@ Navigate to [localhost:3000/](http://localhost:3000/).
 
 ### GCP
 
-For Google Cloud Platform, follow [these instructions](https://www.terraform.io/docs/providers/google/index.html) to copy credentials `.json` file into `/data/creds.json`.  Load the config on the front end, specify a project name, and a unique instance name.
+For Google Cloud Platform, follow [these instructions](https://www.terraform.io/docs/providers/google/index.html) to copy credentials `.json` file into `/data/creds.json`.  (If running with Docker, Vim is available inside the container to create the file and paste the contents.)  Load the config on the front end, specify a project name, and a unique instance name.
 
